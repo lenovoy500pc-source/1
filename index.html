@@ -1,0 +1,524 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Vikas Automobiles, Satna</title>
+    <link rel="stylesheet" href="styles.css">
+    <script type="module" src="./lang.js"></script>
+    <script type="module" src="./login.js"></script>
+    <script type="module" src="./registration.js"></script>
+</head>
+<body>
+    <header>
+        <div class="language-buttons">
+            <button type="button" id="btn-en">English</button>
+            <button type="button" id="btn-hi">हिन्दी</button>
+        </div>
+        <div class="header-main">
+            <div class="logo">
+              <img src="images/logo.jpg" alt="Vikas Automobiles Logo" loading="lazy">
+            </div>
+            <div class="header-text">
+                <p data-i18n="title">Vikas Automobiles, Satna<br>(HPCL Lube Distributor)</p>
+                
+                
+            </div>
+        </div>
+    </header>
+
+    <main class="login-container">
+        <div id="loginCard" class="login-card">
+            <!-- Login Form -->
+            <form id="loginForm" class="login-form" style="display: block;">
+                <h2 data-i18n="login_title">Login</h2>
+                
+                <div class="form-group">
+                    <label for="email" data-i18n="email_phone">Email/Phone</label>
+                    <input type="text" id="email" name="email" autocomplete="username" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="password" data-i18n="password">Password</label>
+                    <input type="password" id="password" name="password" autocomplete="current-password" required>
+                </div>
+
+                <button type="submit" class="btn-primary" data-i18n="send_otp">Send OTP</button>
+                
+                <div class="form-footer">
+                    <p><span data-i18n="no_account">Don't have an account?</span> <button type="button" id="showRegisterBtn" class="link-btn" onclick="openRegistrationForm()" data-i18n="register_here">Register here</button></p>
+                </div>
+            </form>
+
+            <!-- OTP Verification Form (Hidden by default) -->
+            <form id="otpForm" class="otp-form" style="display: none;" aria-hidden="true">
+                <div class="form-group">
+                    <p id="otpLabel" class="field-description" data-i18n="enter_otp">Enter OTP sent to your registered email/phone</p>
+                    <div class="otp-inputs" role="group" aria-labelledby="otpLabel">
+                        <input id="otpDigit1" type="text" class="otp-digit" maxlength="1" inputmode="numeric" pattern="[0-9]*" aria-label="OTP digit 1">
+                        <input id="otpDigit2" type="text" class="otp-digit" maxlength="1" inputmode="numeric" pattern="[0-9]*" aria-label="OTP digit 2">
+                        <input id="otpDigit3" type="text" class="otp-digit" maxlength="1" inputmode="numeric" pattern="[0-9]*" aria-label="OTP digit 3">
+                        <input id="otpDigit4" type="text" class="otp-digit" maxlength="1" inputmode="numeric" pattern="[0-9]*" aria-label="OTP digit 4">
+                        <input id="otpDigit5" type="text" class="otp-digit" maxlength="1" inputmode="numeric" pattern="[0-9]*" aria-label="OTP digit 5">
+                        <input id="otpDigit6" type="text" class="otp-digit" maxlength="1" inputmode="numeric" pattern="[0-9]*" aria-label="OTP digit 6">
+                    </div>
+                </div>
+
+                <div class="otp-timer">
+                    <span data-i18n="resend_in">Resend in</span> <span id="timer">60</span>s
+                </div>
+
+                <button type="submit" class="btn-primary" data-i18n="verify_otp">Verify OTP</button>
+                <button type="button" id="resendBtn" class="btn-secondary" data-i18n="resend_otp" disabled>Resend OTP</button>
+                <button type="button" id="backBtn" class="btn-secondary" data-i18n="back">Back</button>
+            </form>
+
+            <!-- Registration Form (Hidden by default) -->
+            <form id="registrationForm" class="registration-form" style="display: none;" aria-hidden="true">
+                <h2 data-i18n="register_title">Create New Account</h2>
+                
+                <div class="form-group">
+                    <label for="regName" data-i18n="full_name">Full Name</label>
+                    <input type="text" id="regName" name="name" autocomplete="name" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="regCategory" data-i18n="category">Category</label>
+                    <select id="regCategory" name="category" autocomplete="off" required>
+                        <option value="">-- Select --</option>
+                        <option value="retailer" data-i18n-opt="retailer_opt">Retailer</option>
+                        <option value="mechanic" data-i18n-opt="mechanic_opt">Mechanic</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="regMobile" data-i18n="mobile_number">Mobile Number <span class="required">*</span></label>
+                    <input type="tel" id="regMobile" name="mobile" autocomplete="tel" placeholder="10 digits" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="regEmail" data-i18n="email">Email</label>
+                    <input type="email" id="regEmail" name="email" autocomplete="email">
+                </div>
+
+                <div class="form-group" id="firmNameGroup" style="display: none;">
+                    <label for="regFirmName" data-i18n="firm_name">Firm Name <span class="required">*</span></label>
+                    <input type="text" id="regFirmName" name="firmName" autocomplete="organization">
+                </div>
+
+                <div class="form-group">
+                    <label for="regCity" data-i18n="city">City</label>
+                    <input type="text" id="regCity" name="city" autocomplete="address-level2">
+                </div>
+
+                <div class="form-group">
+                    <label for="regPassword" data-i18n="password">Password</label>
+                    <input type="password" id="regPassword" name="password" autocomplete="new-password" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="regConfirmPassword" data-i18n="confirm_password">Confirm Password</label>
+                    <input type="password" id="regConfirmPassword" name="confirmPassword" autocomplete="new-password" required>
+                </div>
+
+                <button type="submit" class="btn-primary" data-i18n="register_btn">Register</button>
+                
+                <div class="form-footer">
+                    <p><button type="button" id="backToLoginBtn" class="link-btn" data-i18n="back_to_login">Back to Login</button></p>
+                </div>
+            </form>
+
+            <div id="message" class="message" role="status" aria-live="polite"></div>
+        </div>
+
+
+    <div id="dashboard" style="display:none;" aria-hidden="true">
+      <div class="dashboard-header">
+        <div>
+          <h2>Welcome, <span id="customerName"></span>!</h2>
+          <p class="dashboard-tagline">Your loyalty account is ready. Track points and redeem rewards instantly.</p>
+        </div>
+        <button type="button" id="logoutBtn" class="btn-secondary">Logout</button>
+      </div>
+
+      <div class="dashboard-summary-grid">
+        <div class="dashboard-card">
+          <span>Points Balance</span>
+          <strong id="pointsBalance">0</strong>
+        </div>
+        <div class="dashboard-card distributor-only" id="nextRewardCard">
+          <span>Next Reward</span>
+          <strong id="nextReward">Free Oil Change</strong>
+        </div>
+        <div class="dashboard-card distributor-only" id="activeOffersCard">
+          <span>Active Offers</span>
+          <strong id="activeOffers">3</strong>
+        </div>
+        <div class="dashboard-card">
+          <span>Account Status</span>
+          <strong id="accountStatus">Verified</strong>
+        </div>
+      </div>
+
+      <div class="points-section">
+    <h3>Points Activity</h3>
+    <div class="points-detail">You earned <span id="recentPoints">+40</span> points in your last purchase.</div>
+  </div>
+
+  <div class="dashboard-grid">
+    <section id="profileSection" class="dashboard-card dashboard-profile-card">
+      <h3>Profile</h3>
+      <p><strong>Name:</strong> <span id="profileName"></span></p>
+      <p><strong>Category:</strong> <span id="profileCategory"></span></p>
+      <p><strong>Firm:</strong> <span id="profileFirm"></span></p>
+      <p><strong>Email:</strong> <span id="profileEmail"></span></p>
+      <p><strong>Mobile:</strong> <span id="profileMobile"></span></p>
+      <p><strong>City:</strong> <span id="profileCity"></span></p>
+    </section>
+    <section id="notificationsSection" class="dashboard-card dashboard-notifications-card">
+      <h3>Notifications</h3>
+      <ul id="notificationsList">
+        <li>No new notifications.</li>
+      </ul>
+    </section>
+  </div>
+
+  <section id="productListSection" class="dashboard-card dashboard-product-list">
+    <div class="section-header">
+      <h3>Product Catalog</h3>
+      <div class="search-row">
+        <input type="text" id="productSearchInput" placeholder="Search products" autocomplete="off" />
+      </div>
+    </div>
+    <div class="table-responsive">
+      <table class="pricing-table">
+        <thead>
+          <tr>
+            <th>Product ID</th>
+            <th>Name</th>
+            <th>Pack Size</th>
+            <th id="priceHeader">Retailer Price (₹)</th>
+            <th id="pointsHeader">Retailer Points</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody id="productListBody">
+          <tr><td colspan="6">Loading products...</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <div class="activity-section">
+    <h3>Recent Activity</h3>
+    <ul id="activityList">
+      <!-- Example: <li>Earned 50 points for purchase</li> -->
+    </ul>
+  </div>
+
+  <div class="purchase-section">
+    <h3>Product Purchase Request</h3>
+    <div class="purchase-actions">
+      <button type="button" id="scanQrBtn" class="btn-secondary">Scan Product QR</button>
+      <button type="button" id="manualQrBtn" class="btn-secondary">Enter QR Code</button>
+    </div>
+    <div id="qrScanner" class="qr-scanner hidden" aria-hidden="true">
+      <video id="qrVideo" autoplay muted playsinline></video>
+      <button type="button" id="stopScanBtn" class="btn-secondary">Stop Scan</button>
+    </div>
+    <form id="purchaseForm" class="purchase-form">
+      <div class="form-row">
+        <label for="qrCodeInput">QR Code</label>
+        <input type="text" id="qrCodeInput" name="qrCode" autocomplete="off" placeholder="Paste or scan QR code">
+        <small>Scan a product QR code to auto-fill fields from the catalog. If no match is found, fill details manually.</small>
+      </div>
+      <div class="purchase-actions">
+        <label for="uploadQrInput" class="btn-secondary">Upload QR Image</label>
+        <input type="file" id="uploadQrInput" accept="image/*" hidden>
+      </div>
+
+      <div class="form-row">
+        <label for="purchaseProductId">Product ID</label>
+        <input type="text" id="purchaseProductId" name="purchaseProductId" autocomplete="off" placeholder="Enter product ID or scan QR code">
+      </div>
+      <div class="form-row">
+        <label for="purchaseProductName">Product Name</label>
+        <input type="text" id="purchaseProductName" placeholder="Enter product name if not autofilled">
+      </div>
+      <div class="form-row">
+    <label for="purchasePackSize">Pack Size</label>
+    <input
+        type="text"
+        id="purchasePackSize"
+        name="purchasePackSize"
+        autocomplete="off"
+        placeholder="e.g. 1L, 5L, 20L">
+      </div>
+      <div class="form-row">
+        <label for="purchaseQuantity">Quantity</label>
+        <input type="number" id="purchaseQuantity" min="1" value="1">
+      </div>
+      <button type="button" id="submitPurchaseBtn" class="btn-primary">Request Approval</button>
+    </form>
+    <div id="purchaseStatusMessage" class="message"></div>
+    <div class="purchase-history">
+      <h4>Purchase Requests</h4>
+      <table class="purchase-history-table">
+        <thead>
+          <tr>
+            <th>Product</th>
+            <th>Pack Size</th>
+            <th>Qty</th>
+            <th>Amount</th>
+            <th>Status</th>
+            <th>Remark</th>
+          </tr>
+        </thead>
+        <tbody id="purchaseHistoryBody"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="rewards-section distributor-only" id="rewardsSection">
+    <h3>Rewards</h3>
+    <div class="dashboard-actions">
+      <button type="button" id="redeemBtn" class="btn-primary">Redeem Points</button>
+      <button type="button" id="exploreOffersBtn" class="btn-secondary">Explore Offers</button>
+    </div>
+  </div>
+</div>
+
+<div id="ownerDashboard" style="display:none;" aria-hidden="true">
+  <div class="dashboard-header owner-header">
+    <div>
+      <h2>Vikas Automobiles Owner Portal</h2>
+      <p>Real-time performance, customer growth, and reward analytics.</p>
+    </div>
+    <button type="button" id="logoutBtnOwner" class="btn-secondary">Logout</button>
+  </div>
+
+  <div class="owner-summary-grid">
+    <div class="owner-card">
+      <span>Total Retailers</span>
+      <strong id="ownerTotalRetailers">28</strong>
+    </div>
+    <div class="owner-card">
+      <span>Active Mechanics</span>
+      <strong id="ownerActiveMechanics">14</strong>
+    </div>
+    <div class="owner-card">
+      <span>Total Points Issued</span>
+      <strong id="ownerPointsIssued">1,430</strong>
+    </div>
+    <div class="owner-card">
+      <span>Monthly Growth</span>
+      <strong id="ownerGrowth">18%</strong>
+    </div>
+  </div>
+
+  <div class="owner-actions">
+    <button type="button" id="btnViewSales" class="btn-primary">View Sales Report</button>
+  </div>
+
+  <div class="owner-panels">
+    <div class="owner-panel">
+      <h3>Top Performers</h3>
+      <ul id="ownerTopPerformers">
+        <li>Rajendra Motors - 92 points redeemed</li>
+        <li>Sharma Garage - 68 points redeemed</li>
+        <li>Patel Retail - 51 points redeemed</li>
+      </ul>
+    </div>
+    <div class="owner-panel">
+      <h3>Recent Registrations</h3>
+      <ul id="ownerRecentRegistrations">
+        
+      </ul>
+    </div>
+  </div>
+
+  <div class="owner-panel owner-pending-panel">
+    <h3>Pending Purchase Approvals</h3>
+    <table class="purchase-history-table owner-pending-table">
+      <thead>
+        <tr>
+          <th>Customer</th>
+          <th>Product</th>
+          <th>Pack Size</th>
+          <th>Qty</th>
+          <th>Amount</th>
+          <th>Status</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody id="ownerPendingRequestsBody"></tbody>
+    </table>
+  </div>
+
+  <div class="owner-insights">
+    <h3>Live Portal Metrics</h3>
+    <div class="owner-metrics">
+      <div>
+        <span id="ownerNewVisits">52</span>
+        <small>New visits today</small>
+      </div>
+      <div>
+        <span id="ownerNewAccounts">12</span>
+        <small>New accounts</small>
+      </div>
+      <div>
+        <span id="ownerEngagementRate">3.8x</span>
+        <small>Engagement rate</small>
+      </div>
+    </div>
+  </div>
+
+  <div class="owner-panel owner-pricing-panel">
+    <h3>Price Management</h3>
+    <div class="pricing-actions">
+      <button type="button" id="btnAddPrice" class="btn-secondary">Add Product Price</button>
+      <button type="button" id="btnUploadPrices" class="btn-secondary">Upload Price List</button>
+    </div>
+    <table class="pricing-table">
+      <thead>
+        <tr>
+          <th>Product ID</th>
+          <th>Product Name</th>
+          <th>Pack Size</th>
+          <th>Retailer Price</th>
+          <th>Mechanic Price</th>
+          <th>Status</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody id="pricingTableBody"></tbody>
+    </table>
+    <div id="pricingMessage" class="message"></div>
+  </div>
+</div>
+
+<!-- Remarks Modal -->
+<div id="remarksModal" class="modal" style="display: none;" aria-hidden="true">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h2 id="remarksTitle">Add Remark</h2>
+      <button type="button" class="modal-close" id="closeRemarksModal" aria-label="Close remark modal">&times;</button>
+    </div>
+    <div class="modal-body">
+      <div class="form-group">
+        <label for="remarksText">Remark/Notes <span style="color: #64748b; font-weight: normal;">(Optional)</span></label>
+        <textarea id="remarksText" placeholder="Add optional remarks about this request... (Can be left empty)" rows="4"></textarea>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button type="button" id="submitRemarksBtn" class="btn-primary">Submit & Close</button>
+      <button type="button" id="cancelRemarksBtn" class="btn-secondary">Cancel</button>
+    </div>
+  </div>
+</div>
+
+<!-- Add Price Modal -->
+<div id="priceModal" class="modal" style="display: none;" aria-hidden="true">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h2>Add Product Price</h2>
+      <button type="button" class="modal-close" id="closePriceModal" aria-label="Close add price modal">&times;</button>
+    </div>
+    <div class="modal-body">
+      <div class="form-group">
+        <label for="priceProductId">Product ID</label>
+        <input type="text" id="priceProductId" placeholder="Enter product ID">
+      </div>
+      <div class="form-group">
+        <label for="priceProductName">Product Name</label>
+        <input type="text" id="priceProductName" placeholder="Enter product name">
+      </div>
+      <div class="form-group">
+        <label for="pricePackSize">Pack Size</label>
+        <input type="text" id="pricePackSize" placeholder="e.g. 1L, 5L, 20L">
+      </div>
+      <div class="form-group">
+        <label for="priceRetailer">Retailer Price (₹)</label>
+        <input type="number" id="priceRetailer" placeholder="Enter retailer price" step="0.01">
+      </div>
+      <div class="form-group">
+        <label for="priceMechanic">Mechanic Price (₹)</label>
+        <input type="number" id="priceMechanic" placeholder="Enter mechanic price" step="0.01">
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button type="button" id="submitPriceBtn" class="btn-primary">Add Price</button>
+      <button type="button" id="cancelPriceBtn" class="btn-secondary">Cancel</button>
+    </div>
+  </div>
+</div>
+
+<!-- Upload Price List Modal -->
+<div id="uploadPriceModal" class="modal" style="display: none;" aria-hidden="true">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h2>Upload Price List</h2>
+      <button type="button" class="modal-close" id="closeUploadPriceModal" aria-label="Close upload price modal">&times;</button>
+    </div>
+    <div class="modal-body">
+      <div class="form-group">
+        <label for="priceListFile">Select CSV or Excel File</label>
+        <input type="file" id="priceListFile" accept=".csv,.xlsx,.xls" />
+        <small style="color: #64748b; display: block; margin-top: 8px;">
+          Supported formats: CSV (.csv), Excel (.xlsx, .xls)
+          <br/>Format: ProductID, ProductName, PackSize, RetailerPrice, MechanicPrice
+          <br/>Example: P001,Racer Splendid,1L,500,450
+        </small>
+      </div>
+      <div id="uploadPreview" style="margin-top: 15px; display: none;" aria-hidden="true">
+        <p class="upload-preview-heading">Preview</p>
+        <table class="pricing-table" style="font-size: 12px;">
+          <thead>
+            <tr>
+              <th>Product ID</th>
+              <th>Product Name</th>
+              <th>Pack Size</th>
+              <th>Retailer Price</th>
+              <th>Mechanic Price</th>
+            </tr>
+          </thead>
+          <tbody id="uploadPreviewBody"></tbody>
+        </table>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button type="button" id="submitUploadPriceBtn" class="btn-primary" disabled>Upload Prices</button>
+      <button type="button" id="cancelUploadPriceBtn" class="btn-secondary">Cancel</button>
+    </div>
+  </div>
+</div>
+<button type="button" id="tab-view-prices" class="nav-btn" data-i18n="view_prices" aria-expanded="false" aria-controls="viewPricesView">View Prices</button>
+<div id="viewPricesView" class="view-section" style="display: none;" aria-hidden="true">
+    <div class="card">
+        <h2 data-i18n="product_price_list">Product Price List</h2>
+        
+        <div class="search-box-container" style="margin-bottom: 15px; display: flex; gap: 10px;">
+            <input type="text" id="searchPriceInput" autocomplete="off" placeholder="Search product name or ID..." aria-label="Search product name or ID" style="flex: 1; padding: 10px; border: 1px solid #cbd5e1; border-radius: 6px;" />
+        </div>
+
+        <div class="table-responsive">
+            <table class="pricing-table">
+                <thead>
+                    <tr>
+                        <th data-i18n="product_id">Product ID</th>
+                        <th data-i18n="product_name">Product Name</th>
+                        <th data-i18n="pack_size">Pack Size</th>
+                        <th data-i18n="retailer_price">Retailer Price (₹)</th>
+                        <th data-i18n="mechanic_price">Mechanic Price (₹)</th>
+                    </tr>
+                </thead>
+                <tbody id="publicPriceTableBody">
+                    </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+    </main>
+</body>
+</html>
+
+    
