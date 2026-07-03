@@ -1,0 +1,7 @@
+{
+  "timeZone": "UTC",
+  "exceptionLogging": "STACKDRIVER",
+  "executionApi": {
+    "access": "ANYONE"
+  }
+}
